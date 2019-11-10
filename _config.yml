@@ -8,7 +8,7 @@ subtitle: ''
 description: '积木杨的博客'
 keywords:
 author: Jimu Yang
-language: zh-Hans
+language: zh-CN
 timezone: ''
 
 # URL
@@ -95,4 +95,6 @@ theme: next
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type: ''
+  type: git
+  repo: https://github.com/jimuyang/jimuyang.github.io
+  # https://github.com/<username>/<project>
