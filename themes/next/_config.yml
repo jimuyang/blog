@@ -581,7 +581,7 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: changyan | disqus | disqusjs | gitalk | livere | valine
-  active:
+  active: disqus
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Modify texts or order for any navs, here are some examples.
