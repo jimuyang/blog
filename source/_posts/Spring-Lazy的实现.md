@@ -125,7 +125,6 @@ if (Optional.class == descriptor.getDependencyType()) {
         if (result == null) {
             result = this.doResolveDependency(descriptor, requestingBeanName, autowiredBeanNames, typeConverter);
         }
-
         return result;
     }
 } else {
@@ -155,11 +154,13 @@ protected boolean isLazy(DependencyDescriptor descriptor) {
     return false;
 }
 
+// 创建proxy
 protected Object buildLazyResolutionProxy(final DependencyDescriptor descriptor, final @Nullable String beanName) {
     Assert.state(getBeanFactory() instanceof DefaultListableBeanFactory,
             "BeanFactory needs to be a DefaultListableBeanFactory");
     final DefaultListableBeanFactory beanFactory = (DefaultListableBeanFactory) getBeanFactory();
-    // TargetSource是一个接口 用于提供实际要代理的target
+    // TargetSource是一个接口 用于提供实际要代理的target 
+    // 这里给到的实现是从beanFactory取得target
     TargetSource ts = new TargetSource() {
         @Override
         public Class<?> getTargetClass() {
@@ -203,7 +204,7 @@ protected Object buildLazyResolutionProxy(final DependencyDescriptor descriptor,
     return pf.getProxy(beanFactory.getBeanClassLoader());
 }
 ```
-4. 生成proxy 分为jdk和cglib 
+4. 生成proxy 分为jdk(JdkDynamicAopProxy)和cglib(CglibAopProxy) 
 org.springframework.aop.framework.DefaultAopProxyFactory#createAopProxy
 ```java
 if (!config.isOptimize() && !config.isProxyTargetClass() && !this.hasNoUserSuppliedProxyInterfaces(config)) {
