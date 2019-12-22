@@ -5,7 +5,7 @@ tags:
 ---
 
 ## 推荐使用Builder模式
-可用来实现不可变类 可方便的使用`Lombok``@Builder`来使用
+可用来实现不可变类 可方便的使用`Lombok` `@Builder`来使用
 
 ```java
 public class Person {
@@ -78,10 +78,12 @@ try-with-resources一共有3个步骤
 1. 小括号内的代码块 一般为打开资源 
 2. 大号内的代码块 一般为使用资源
 3. 隐藏的close调用 实现了AutoCloseable的资源会被close
+
 这3个阶段都可能抛出异常  
 1. 小括号内的代码块出现异常 => 直接抛出 不再执行下2个阶段 
 2. 大号内的代码块出现异常 => 继续执行close阶段 保证资源正常close后抛出异常 
 3. 隐藏的close调用出现异常 => 如果2阶段没有异常则抛出异常 否则将自己的异常信息加入到2阶段异常的堆栈中 
+
 给出测试代码 可以分别注释3个阶段的异常抛出代码进行测试
 ```java
 static class AutoCloseResource implements AutoCloseable {
