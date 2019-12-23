@@ -218,7 +218,7 @@ if (!config.isOptimize() && !config.isProxyTargetClass() && !this.hasNoUserSuppl
     }
 }
 ```
-> 复习下：spring的动态代理在没给具体类或者面向接口时使用jdk，其他使用cglib (因为cglib的本质是动态生成被代理类的子类)  
+> 复习下：spring的动态代理在没给具体类或者面向接口时使用jdk(本质是Proxy实现了代理接口 反射调用方法)，其他使用cglib(本质是生成被代理类的子类 FastClass机制直接调用原方法) 
 5. proxy中对方法的拦截 这里jdk和cglib行为相似 
 关键在于这里调用了`targetSource.getTarget()`来从beanFactory获取bean从而触发了init 核心代码:
 
