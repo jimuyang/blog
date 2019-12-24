@@ -125,7 +125,7 @@ scheme: Pisces
 # External url should start with http:// or https://
 menu:
   home: / || home
-  #about: /about/ || user
+  # about: /about/ || user
   tags: /tags/ || tags
   #categories: /categories/ || th
   archives: /archives/ || archive
@@ -419,7 +419,7 @@ font:
   enable: false
 
   # Uri of fonts host, e.g. //fonts.googleapis.com (Default).
-  host:
+  host: //fonts.lug.ustc.edu.cn
 
   # Font options:
   # `external: true` will load this font family from `host` above.
