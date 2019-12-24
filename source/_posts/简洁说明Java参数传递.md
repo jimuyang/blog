@@ -61,8 +61,8 @@ final变量的语义也可以统一为变量的“值”初始化后不可更改
     }
 ```
 断点处线程帧栈一览：
-![](/images/javaargpass1.jpg)
-![](/images/javaargpass2.jpg) 
+![](/blog/images/javaargpass1.jpg)
+![](/blog/images/javaargpass2.jpg) 
 
 通过断点后 func方法内执行这2行代码，只会修改func方法栈内的变量a和o的**值**，而不会对main方法栈内的a和o有任何影响，这也是copy的精髓
 ```java

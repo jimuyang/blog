@@ -31,12 +31,12 @@ tags:
 不同的IO模型的区分正是在这2个阶段的行为不同  
 
 ### Blocking IO 阻塞IO
-![](/images/BlockingIOModel.gif)
+![](/blog/images/BlockingIOModel.gif)
 最大的特点 用户进程从read调用开始阻塞，直到**数据准备好**并**复制到用户进程中**（即read调用返回）之后，阻塞才会结束。
 
 ### NoneBlocking IO 非阻塞IO
 linux下，可以通过设置socket使其变为non-blocking。当对一个non-blocking socket执行读操作时，流程是这个样子：
-![](/images/NonblockingIOModel.gif)
+![](/blog/images/NonblockingIOModel.gif)
 最大的特点 在**数据准备好**之前的read调用会立即返回一个error（类似数据还没有准备好），直到**数据准备好**之后的read调用会阻塞并将数据**复制到用户进程中**，read结束
 
 ### IO Multiplexing IO多路复用 
@@ -44,8 +44,8 @@ linux下，可以通过设置socket使其变为non-blocking。当对一个non-bl
 * select: fd数组 轮询 O(n) 限连接数
 * poll: fd链表 轮询 O(n) 无连接数限制 
 * epoll: event poll 事件驱动 O(1) 只关心活跃的fd
-![](/images/IOMultiplexing.gif)
+![](/blog/images/IOMultiplexing.gif)
 
 ### Asynchronous IO 异步IO
 真正的异步IO是没有环节阻塞的，直到**数据准备好**并**复制到用户进程中**之后才会通知用户进程直接使用
-![](/images/AsyncIO.gif)
+![](/blog/images/AsyncIO.gif)

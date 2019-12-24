@@ -594,7 +594,7 @@ comments:
 
 # Disqus
 disqus:
-  enable: true
+  enable: false
   shortname: 积木杨
   count: true
   lazyload: false
