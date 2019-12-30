@@ -82,7 +82,7 @@ try-with-resources一共有3个步骤
 
 这3个阶段都可能抛出异常  
 1. 小括号内的代码块出现异常 => 直接抛出 不再执行下2个阶段 
-2. 大号内的代码块出现异常 => 继续执行close阶段 保证资源正常close后抛出异常 
+2. 大括号内的代码块出现异常 => 继续执行close阶段 保证资源正常close后抛出异常 
 3. 隐藏的close调用出现异常 => 如果2阶段没有异常则抛出异常 否则将自己的异常信息加入到2阶段异常的堆栈中 
 
 给出测试代码 可以分别注释3个阶段的异常抛出代码进行测试
@@ -116,7 +116,50 @@ java.lang.Exception: 使用资源出现异常
 		... 1 more
 ```
 
+## 并发-安全的终止线程
 
+### 错误示范1
+来自《Effective Java》，如书中所说我对下面这段程序的预测也是运行超过1秒钟，但本机测试后，这个程序永远没有停止。。。
+```java
+import java.util.concurrent.TimeUnit;
+
+public class Test implements Runnable {
+    private boolean stop;
+
+    public void run() {
+        while (!stop) {
+        }
+    }
+
+    public void stop() {
+        stop = true;
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        Test runner = new Test();
+        Thread thread = new Thread(runner, "runnerThread");
+        thread.start();
+        TimeUnit.SECONDS.sleep(1L);
+        runner.stop(); 
+    }
+}
+```
+书中给了简单的解释是因为JVM会将下面的代码：
+```java
+while (!stop) {
+}
+```
+优化成这样：
+```java
+if (!stop) {
+    while(true) {
+    }
+}
+```
+那么是谁出于什么目的依照什么标准在什么阶段完成的上述优化呢？这个问题完全值得深挖一篇新博客了，留坑。这里先做一个简单的回答：
+> `JIT编译器`(Just In Time Compiler)出于提高`热点代码`的执行效率的目的按照`JMM`(Java内存模型)的指导(在这里其实是没做要求)在`运行时`(Runtime)完成的`循环表达式外提`(Loop Expression Hoisting)优化。也就是书中的“提升”。
+
+可以通过参数 **-Xint** 来强制JVM运行于`解释模式`(Interpreted Mode)来让JIT不工作，此时上面的代码会如想象般运行超过1s但最终停止。
 
 
 
