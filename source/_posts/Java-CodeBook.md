@@ -161,6 +161,86 @@ if (!stop) {
 
 可以通过参数 **-Xint** 来强制JVM运行于`解释模式`(Interpreted Mode)来让JIT不工作，此时上面的代码会如想象般运行超过1s但最终停止。
 
+## 设计模式 Demo代码
+
+### 单例
+1. 提前初始化
+```java
+class Singleton {
+    private static Singleton instance = new Singleton();
+    // 构造方法私有
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return instance;
+    }
+}
+```
+2. 内部类实现懒汉
+```java
+class Singleton {
+    // 构造方法私有
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return Holder.instance;
+    }
+
+    private static class Holder {
+        static Singleton instance = new Singleton();
+    }
+}
+```
+
+3. Double-Check
+```java
+class Singleton {
+    // volatile保证未完成初始化的对象不会漏出
+    private static volatile Singleton instance;
+    // 构造方法私有
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            synchronized {
+                if (instance == null) {
+                    instance = new Singleton();
+                }
+            }
+        }
+        return instance;
+    }
+}
+```
+> 此时还是有几个小问题：
+* 可能通过反射调用私有的构造方法
+* 序列化问题 readObject()永远返回一个新的实例
+
+4. 最佳实践 枚举实现单例
+```java
+class Singleton {
+    // 构造方法私有
+    private Singleton() {}
+
+    public static Singleton getInstance() {
+        return HolderEnum.INSTANCE.getInstance();
+    }
+
+    static enum HolderEnum {
+        INSTANCE;
+        private Singleton instance;
+
+        private HolderEnum() {
+            this.instance = new Singleton();
+        }
+
+        public Singleton getInstance() {
+            return this.instance;
+        }
+    }
+}
+```
+
 
 
 
