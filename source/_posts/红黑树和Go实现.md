@@ -260,9 +260,9 @@ func (tree *RBTree) Insert(value int64) {
 1. 黑根原则 => 根节点变色即可
 2. 连红原则 此时分情况提供解决方案：
 * 如果父节点和叔节点都是红色 => 双变色：父节点和叔节点都变黑 爷节点变红
-![](/blog/images/rbtree/1.jpg)
+![](/images/rbtree/1.jpg)
 * 如果父节点红、叔节点黑    => 统一战线干掉爷节点：保证我、父、爷成一条直线，然后旋转挤下爷节点
-![](/blog/images/rbtree/2.jpg)
+![](/images/rbtree/2.jpg)
 从图上可以看出在不看红节点的视角下，所有子树都接在一个黑节点上，旋转过后依然如此，因此黑高原则没有被打破
 ```go
 func (tree *RBTree) insertFixup(newNode *RBNode) {
@@ -318,7 +318,7 @@ func (tree *RBTree) transplant(deleted *RBNode, move *RBNode) {
 #### Delete 
 从红黑树中删除一个值需要2步：1. 找到这个值 2.删掉它
 其中的关键点是：从树中删除一个节点，往往实际删除的是它的后继节点
-![](/blog/images/rbtree/3.jpg)
+![](/images/rbtree/3.jpg)
 ```go
 // Delete 从红黑树中删除一个值
 func (tree *RBTree) Delete(value int64) error {
@@ -372,14 +372,14 @@ deleteFixup方法就是要处理这额外的黑色，手段是将这个黑色上
 
 主要讨论node是黑黑节点且不是根节点的情况，下面分析基于一个假设：node是左孩子、兄弟是右孩子的情况，因为node是右孩子是完全对称的情形
 1. 如果兄弟节点是红色的 左旋让兄弟变成黑的
-![](/blog/images/rbtree/4.jpg)
+![](/images/rbtree/4.jpg)
 2. 如果兄弟节点是黑色
 * 2.1 兄弟的子女都是黑的 就可以和兄弟一起脱黑 额外的黑转移给父节点
-![](/blog/images/rbtree/5.jpg)
+![](/images/rbtree/5.jpg)
 * 2.2 兄弟的右孩子是红的 左旋即可 （拉父节点下水 让父节点承担额外的黑 解决问题
-![](/blog/images/rbtree/6.jpg)
+![](/images/rbtree/6.jpg)
 * 2.3 兄弟的左孩子是红的 兄弟右旋让右孩子变红 回到2.2
-![](/blog/images/rbtree/7.jpg)
+![](/images/rbtree/7.jpg)
 
 代码实现
 ```go

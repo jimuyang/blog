@@ -39,11 +39,11 @@ Object result = groovyObject.invokeMethod("main", input);
 3. 无法感受现有的逻辑  
 
 这里的解决方案是: 图编辑器->生成逻辑流程图->解析为Groovy脚本->执行。可见即可得
-![](/blog/images/rulepile/flow2.jpg)
+![](/images/rulepile/flow2.jpg)
 
 ## 图编辑器
 图编辑器选择`g6`，准确来说选择开箱即用的`ant-design-pro`+`GGEditor`，前端要改的内容其实不多，为应对生成逻辑的需要，需要添加一些表单项即可
-![](/blog/images/rulepile/flow3.jpg)
+![](/images/rulepile/flow3.jpg)
 
 ## 解析图和逻辑依赖
 编辑器的输出是`node`数组和`edge`数组，就是图上的节点和线们。后台解析这段json后，生成逻辑树。之后对逻辑树进行遍历后，生成最后的Groovy脚本。  
@@ -90,4 +90,4 @@ return resultScript.toString();
 ```
 
 ## 具体设计
-![](/blog/images/rulepile/er.jpg)
+![](/images/rulepile/er.jpg)
