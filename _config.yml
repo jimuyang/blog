@@ -103,5 +103,5 @@ theme: next
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: git
-  repo: https://github.com/jimuyang/jimuyang.github.io
+  repo: git@github.com:jimuyang/jimuyang.github.io.git
   branch: gh-pages
